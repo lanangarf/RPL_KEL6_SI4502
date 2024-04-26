@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\WebinarController;
 Route::redirect('/', '/login');
 
 // Recruiter
@@ -16,6 +16,9 @@ Route::middleware(['auth', 'role:applicant'])->group(function () {
     Route::get('/applicant/dashboard', function () {
         return view('applicant.applicant_dashboard');
     });
+
+    Route::get('/webinars', [WebinarController::class, 'index'])->name('webinars.index');
+    Route::get('/webinars/{id}', [WebinarController::class, 'show'])->name('webinars.show');   
 });
 
 // Admin
