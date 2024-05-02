@@ -2,6 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ApplicantController;
+use App\Http\Controllers\RecruiterController;
 
 Route::redirect('/', '/login');
 

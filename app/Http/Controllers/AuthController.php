@@ -34,7 +34,7 @@ class AuthController extends Controller
         
         $request->session()->flash('success', 'Registration successful! Welcome to Dash.');
 
-        return redirect('/dashboard');
+        return redirect('/login');
     }
 
     public function showLoginForm()
@@ -44,19 +44,36 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        $credentials = $request->validate([
+        $request->validate([
             'email' => 'required|email',
             'password' => 'required',
         ]);
-
-        if (Auth::attempt($credentials)) {
+    
+        if (Auth::attempt($request->only('email', 'password'))) {
             $request->session()->regenerate();
-            return redirect()->intended('/');
+    
+            return $this->redirectBasedOnRole();
         }
-
+    
         return back()->withErrors([
             'email' => 'The provided credentials do not match our records.',
         ]);
+    }
+    
+    protected function redirectBasedOnRole()
+    {
+        $role = Auth::user()->role;
+    
+        switch ($role) {
+            case 'admin':
+                return redirect()->route('admin.dashboard');
+            case 'applicant':
+                return redirect()->route('applicant.dashboard');
+            case 'recruiter':
+                return redirect()->route('recruiter.dashboard');
+            default:
+                return redirect('/');
+        }
     }
 
     public function logout(Request $request)

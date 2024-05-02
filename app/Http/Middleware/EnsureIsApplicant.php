@@ -10,10 +10,13 @@ class EnsureIsApplicant
 {
     public function handle(Request $request, Closure $next)
     {
+        \Log::info('Entered EnsureIsApplicant middleware, User Role: ' . Auth::user()->role);
+    
         if (!Auth::check() || Auth::user()->role !== 'applicant') {
+            \Log::info('Access denied in EnsureIsApplicant middleware.');
             return redirect('/')->with('error', 'Access denied.');
         }
-
+    
         return $next($request);
     }
 }
