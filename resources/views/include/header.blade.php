@@ -34,8 +34,3 @@
     </div>
   </div>
 </nav>
-<footer>
-        <div class="container text-center">
-            &copy; 2024 Dash. All rights reserved.
-        </div>
-</footer>
