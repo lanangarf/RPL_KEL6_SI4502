@@ -1,31 +1,27 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ApplicantController;
+use App\Http\Controllers\RecruiterController;
 
 Route::redirect('/', '/login');
 
-// Recruiter
-Route::middleware(['auth', 'role:recruiter'])->group(function () {
-    Route::get('/recruiter/dashboard', function () {
-        return view('recruiter.recruiter_dashboard');
-    });
-});
+// Authentication
+Route::get('login', [AuthController::class, 'showLoginForm'])->name('login');
+Route::post('login', [AuthController::class, 'login']);
+Route::get('register', [AuthController::class, 'showRegistrationForm'])->name('register');
+Route::post('register', [AuthController::class, 'register']);
+Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 
-// Applicant
-Route::middleware(['auth', 'role:applicant'])->group(function () {
-    Route::get('/applicant/dashboard', function () {
-        return view('applicant.applicant_dashboard');
-    });
-});
+Route::middleware(['auth'])->group(function () {
+    // Applicant Dashboard
+    Route::get('/dashboard/applicant', [ApplicantController::class, 'index'])->name('applicant.dashboard')->middleware('is_applicant');
 
-// Admin
-Route::middleware(['auth', 'role:admin'])->group(function () {
-    Route::get('/admin/dashboard', function () {
-        return view('admin.admin_dashboard');
-    });
-});
+    // Admin Dashboard
+    Route::get('/dashboard/admin', [AdminController::class, 'index'])->name('admin.dashboard')->middleware('is_admin');
 
-// Auth
-Route::get('/login', 'App\Http\Controllers\Auth\LoginController@showLoginForm')->name('login');
-Route::post('/login', 'App\Http\Controllers\Auth\LoginController@login');
-Route::post('/logout', 'App\Http\Controllers\Auth\LoginController@logout')->name('logout');
+    // Recruiter Dashboard
+    Route::get('/dashboard/recruiter', [RecruiterController::class, 'index'])->name('recruiter.dashboard')->middleware('is_recruiter');
+});
