@@ -24,6 +24,6 @@ Route::middleware(['auth'])->group(function () {
 
     // Recruiter Dashboard
     Route::get('/dashboard/recruiter', [RecruiterController::class, 'index'])->name('recruiter.dashboard')->middleware('is_recruiter');
-});
 
-#tai
+
+});
