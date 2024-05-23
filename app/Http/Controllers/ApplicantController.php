@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
+namespace App\Http\Controllers;
 
 class ApplicantController extends Controller
 {
@@ -10,3 +9,6 @@ class ApplicantController extends Controller
         return view('applicant.dashboard');
     }
 }
+
+
+
