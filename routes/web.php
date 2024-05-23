@@ -6,6 +6,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ApplicantController;
 use App\Http\Controllers\RecruiterController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\WebinarController;
 
 Route::redirect('/', '/login');
 
@@ -22,6 +23,16 @@ Route::middleware(['auth', 'is_applicant'])->group(function () {
     Route::get('applicant/events', [EventController::class, 'index'])->name('applicant.events.index');
     Route::get('applicant/events/{event}/join', [EventController::class, 'join'])->name('applicant.events.join');
     Route::get('applicant/events/{event}/certificate', [EventController::class, 'generateCertificate'])->name('applicant.events.certificate');
+  
+// Applicant
+Route::middleware(['auth', 'role:applicant'])->group(function () {
+    Route::get('/applicant/dashboard', function () {
+        return view('applicant.applicant_dashboard');
+    });
+
+    Route::get('/webinars', [WebinarController::class, 'index'])->name('webinars.index');
+    Route::get('/webinars/{id}', [WebinarController::class, 'show'])->name('webinars.show');   
+
 });
 Route::middleware(['auth', 'is_admin'])->group(function () {
     // Admin Dashboard
