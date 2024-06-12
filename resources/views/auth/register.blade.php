@@ -1,9 +1,9 @@
-@extends('layouts.app')
-@section('title', 'Login')
+@extends('layouts.plain')
+@section('title', 'Register')
 @section('content')
 <style>
     .vh-100 {
-        height: 100vh;
+        height: 80vh;
     }
     .card {
         max-width: 400px;
@@ -11,14 +11,17 @@
 </style>
 <div class="row justify-content-center align-items-center vh-100">
     <div class="col-md-auto">
+        <div class="col-12 text-center mb-4">
+            <h1>Dash.</h1>
+        </div>
         <div class="card shadow-lg">
-            <div class="card-header text-center">Register</div>
+            <div class="card-header text-center">Register to Dash.</div>
             <div class="card-body">
                 <form method="POST" action="{{ route('register') }}">
                     @csrf
                     <div class="mb-3">
                         <label for="name" class="form-label">Name</label>
-                        <input type="text" class="form-control" name="name" id="name" required>
+                        <input type="text" class="form-control" name="name" id="name" required autofocus>
                     </div>
                     <div class="mb-3">
                         <label for="email" class="form-label">Email Address</label>
@@ -33,8 +36,9 @@
                         <input type="password" class="form-control" name="password_confirmation" id="password_confirmation" required>
                     </div>
                     <div class="mb-3">
-                        <label for="role" class="form-label">What are you?</label>
-                        <select class="form-control" name="role">
+                        <label for="role" class="form-label">Select Role</label>
+                        <select class="form-control" name="role" id="role" required>
+                            <option value="" disabled selected>Select your role</option>
                             <option value="applicant">Applicant</option>
                             <option value="recruiter">Recruiter</option>
                         </select>

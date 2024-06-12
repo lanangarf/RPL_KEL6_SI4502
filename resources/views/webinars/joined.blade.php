@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <h1>Joined Webinars</h1>
-    <a href="{{ route('applicant.dashboard') }}" class="btn btn-secondary mb-3">Back to Dashboard</a>
+    <a href="{{ route('webinars.index') }}" class="btn btn-secondary mb-3">Back</a>
     @if($webinars->isEmpty())
         <p>You have not joined any webinars.</p>
     @else

@@ -7,13 +7,18 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Event;
 use Barryvdh\DomPDF\Facade\Pdf;
 
-
 class EventController extends Controller
 {
-    public function index()
+    public function applicantIndex()
     {
         $events = Event::all();
         return view('applicant.events.index', compact('events'));
+    }
+    
+    public function recruiterIndex()
+    {
+        $events = Event::where('recruiter_id', Auth::id())->get();
+        return view('recruiter.events.index', compact('events'));
     }
     
     public function create()
@@ -34,6 +39,10 @@ class EventController extends Controller
             'recruiter_id' => Auth::id(),
         ]);
     
+        if ($request->ajax()) {
+            return response()->json(['success' => 'Event created successfully.']);
+        }
+    
         return redirect()->route('recruiter.events.index')
             ->with('success', 'Event created successfully.');
     }
@@ -49,6 +58,7 @@ class EventController extends Controller
     {
         $applicant = Auth::user();
     
+        // Generate certificate logic here
     
         return response()->download($certificatePath);
     }
@@ -67,9 +77,7 @@ class EventController extends Controller
             'date' => now()->format('F d, Y'),
         ];
     
-        $pdf = PDF::loadView('certificates.template', $data);
+        $pdf = Pdf::loadView('certificates.template', $data);
         return $pdf->download('certificate-' . $applicant->name . '-' . $event->title . '.pdf');
     }
-    
-
 }

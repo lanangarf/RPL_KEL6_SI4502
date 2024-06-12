@@ -12,7 +12,7 @@ class User extends Authenticatable
     use HasFactory, Notifiable;
 
     protected $fillable = [
-        'name', 'email', 'password', 'role'
+        'name', 'email', 'password', 'role', 'profile_photo', 'company_name'
     ];
 
     protected $hidden = [
@@ -31,6 +31,21 @@ class User extends Authenticatable
     public function joinedWebinars()
     {
         return $this->belongsToMany(Webinar::class, 'webinar_applicant', 'applicant_id', 'webinar_id');
+    }
+
+    public function education()
+    {
+        return $this->hasMany(Education::class);
+    }
+
+    public function experience()
+    {
+        return $this->hasMany(Experience::class);
+    }
+
+    public function applications()
+    {
+        return $this->hasMany(Application::class);
     }
 
 }

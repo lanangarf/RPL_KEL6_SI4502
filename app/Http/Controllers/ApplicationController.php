@@ -16,14 +16,17 @@ class ApplicationController extends Controller
         return view('recruiter.jobs.applications', compact('job', 'applications'));
     }
 
-    public function store(Job $job)
+    public function store(Request $request, $jobId)
     {
+        $user = Auth::user();
+
         Application::create([
-            'job_id' => $job->id,
-            'applicant_id' => Auth::id(),
+            'user_id' => $user->id,
+            'job_id' => $jobId,
+            'status' => 'pending'
         ]);
 
-        return redirect()->route('applicant.jobs.index')->with('success', 'Applied for job successfully.');
+        return redirect()->route('applicant.jobs.index')->with('success', 'You have successfully applied for the job.');
     }
 
     public function updateStatus(Application $application, Request $request)

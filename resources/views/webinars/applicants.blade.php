@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <h1>Applicants for {{ $webinar->title }}</h1>
-    <a href="{{ route('recruiter.dashboard') }}" class="btn btn-secondary mb-3">Back to Dashboard</a>
+    <a href="{{ route('webinars.index') }}" class="btn btn-secondary mb-3">Back</a>
     @foreach($applicants as $applicant)
         <div class="card mb-3">
             <div class="card-body">

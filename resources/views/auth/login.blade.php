@@ -1,18 +1,22 @@
-@extends('layouts.app')
+@extends('layouts.plain')
 @section('title', 'Login')
 @section('content')
 <style>
     .vh-100 {
-        height: 100vh;
+        height: 80vh;
     }
     .card {
         max-width: 400px;
     }
+
 </style>
-<div class="row justify-content-center align-items-center vh-100">
+<div class="row justify-content-center align-items-center vh-95 ">
+    <div class="col-12 text-center mb-4">
+        <h1>Dash.</h1>
+    </div>
     <div class="col-md-auto">
         <div class="card shadow-lg">
-            <div class="card-header text-center">Login</div>
+            <div class="card-header text-center">Login to Dash.</div>
             <div class="card-body">
                 <form method="POST" action="{{ route('login') }}">
                     @csrf
@@ -25,7 +29,7 @@
                         <input type="password" class="form-control" name="password" id="password" required>
                     </div>
                     <div class="mb-3 form-check">
-                        <input type="checkbox" class="form-check-input" id="remember">
+                        <input type="checkbox" class="form-check-input" id="remember" name="remember">
                         <label class="form-check-label" for="remember">Remember Me</label>
                     </div>
                     <button type="submit" class="btn btn-primary w-100">Login</button>
