@@ -27,7 +27,6 @@ Route::middleware(['auth', 'role:recruiter'])->group(function () {
     });
     Route::get('/dashboard/recruiter', [RecruiterController::class, 'index'])->name('recruiter.dashboard');
     Route::get('recruiter/jobs', [JobController::class, 'index'])->name('recruiter.jobs.index');
-    Route::get('recruiter/jobs/create', [JobController::class, 'create'])->name('recruiter.jobs.create');
     Route::post('recruiter/jobs', [JobController::class, 'store'])->name('recruiter.jobs.store');
 });
 
@@ -44,6 +43,7 @@ Route::middleware(['auth', 'is_applicant'])->group(function () {
     Route::get('applicant/applications/active', [ApplicationController::class, 'activeApplications'])->name('applicant.applications.active');
     Route::get('applicant/applications/{application}/schedule-interview', [ApplicationController::class, 'scheduleInterview'])->name('applicant.schedule.interview');
     Route::post('applications/{application}/interviews/schedule', [InterviewController::class, 'schedule'])->name('interview.schedule');
+});
 
 // Applicant
 Route::middleware(['auth', 'role:applicant'])->group(function () {
@@ -70,8 +70,9 @@ Route::post('/logout', 'App\Http\Controllers\Auth\LoginController@logout')->name
 Route::middleware(['auth', 'is_recruiter'])->group(function () {
     // Recruiter Dashboard
     Route::get('/dashboard/recruiter', [RecruiterController::class, 'index'])->name('recruiter.dashboard');
-    Route::get('recruiter/events/create', [EventController::class, 'create'])->name('recruiter.events.create');
     Route::post('recruiter/events', [EventController::class, 'store'])->name('recruiter.events.store');
     Route::get('recruiter/events', [EventController::class, 'index'])->name('recruiter.events.index');
 });
 
+Route::get('recruiter/jobs/create', [JobController::class, 'create'])->name('recruiter.jobs.create');
+Route::get('recruiter/events/create', [EventController::class, 'create'])->name('recruiter.events.create');
