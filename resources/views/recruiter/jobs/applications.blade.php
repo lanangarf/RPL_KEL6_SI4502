@@ -25,7 +25,7 @@
                     <tbody>
                         @foreach($applications as $application)
                         <tr>
-                            <td>{{ optional($application->applicant)->name ?? 'Applicant does not exist' }}</td>
+                            <td>{{ optional($application->user)->name ?? 'Applicant does not exist' }}</td>
                             <td>{{ ucfirst($application->status) }}</td>
                             <td>
                                 <form action="{{ route('applications.status.update', $application->id) }}" method="POST">
